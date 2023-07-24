@@ -40,12 +40,11 @@ namespace Monster_VS_Robot_project
             }
             return robotFleet.RobotMembers[num];
         }
-        public void BigCombat(RobotFleet robotFleet,DinosaurHerd dinosaurHerd) 
+        public void BigCombat(DinosaurHerd dinosaurHerd,RobotFleet robotFleet) 
         {
             while (robotFleet.RobotMembers[0].Health + robotFleet.RobotMembers[1].Health+ robotFleet.RobotMembers[2].Health>0 && dinosaurHerd.DinosaurMembers[0].Health+ dinosaurHerd.DinosaurMembers[1].Health+ dinosaurHerd.DinosaurMembers[2].Health>0) { }        
-            for (int i=0; i>=3; i++)
+            for (int i=0; i<3; i++)
             {
-                int num = rnd.Next();
                 if (robotFleet.RobotMembers[i].Health > 0)
                 {
                         robotFleet.RobotMembers[i].attackDinosaur(SelectTargetDinosaur(dinosaurHerd));
@@ -55,8 +54,7 @@ namespace Monster_VS_Robot_project
                     Console.WriteLine($"{robotFleet.RobotMembers[i].Name} is down, their attack is skipped.");
                     
                 }
-                num = rnd.Next();
-                if (dinosaurHerd.DinosaurMembers[i].Health >= 0)
+                if (dinosaurHerd.DinosaurMembers[i].Health > 0)
                 {
                     dinosaurHerd.DinosaurMembers[i].attackRobot(SelectTargetRobot(robotFleet));
                 }
@@ -69,7 +67,26 @@ namespace Monster_VS_Robot_project
         }
         public void runBigGame()
         {
+            Dinosaur Trex = new Dinosaur("Trex");
+            Trex.Health = 300;
+            Trex.AttackPower = 75;
+            Dinosaur Allosaurus = new Dinosaur("Allosaurus");
+            Allosaurus.Health = 225;
+            Allosaurus.AttackPower = 75;
+            Dinosaur Anxylosaurus = new Dinosaur("Anxylosaurus");
+            Anxylosaurus.Health = 400;
+            Anxylosaurus.AttackPower = 40;
 
+            Robot Jager = new Robot("Jager");
+            Jager.Health = 400;
+            Robot Lancer = new Robot("Lancer");
+            Lancer.Health = 250;
+            Robot Titan = new Robot("Titan");
+            Titan.Health = 500;
+            DinosaurHerd dinosaurHerd = new DinosaurHerd(Allosaurus, Anxylosaurus, Trex);
+            RobotFleet robotfleet = new RobotFleet(Lancer, Titan, Jager);
+            BigDisplayWelcome(dinosaurHerd,robotfleet);
+            BigCombat(dinosaurHerd, robotfleet);
         }  
 
         //Start of random selection code
